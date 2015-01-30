@@ -1,0 +1,19 @@
+{
+  "name": "earthquake-globe",
+  "version": "0.0.0",
+  "authors": [
+    "Joe Fitter <joefitter@hotmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "threejs": "*",
+    "firebase": "~2.1.2"
+  }
+}
