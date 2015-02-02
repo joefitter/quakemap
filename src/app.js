@@ -39,6 +39,51 @@ function mapQuake(snapshot) {
   cube.lookAt( earth.position );
   earth.add(cube);
 
+  var d = new Date(quake.time);
+
+  var days = d.getDate();
+
+  if (days < 10) {
+    days = '0' + days;
+  }
+
+  var month = d.getMonth() + 1;
+
+  if (month < 10) {
+    month = '0' + month;
+  }
+
+  var year = d.getFullYear();
+
+  var canvas1 = document.createElement('canvas');
+  var context1 = canvas1.getContext('2d');
+  context1.font = "Bold 40px Arial";
+  context1.fillStyle = "rgba(255,255,255,0.95)";
+  // context1.fillText(quake.mag + 'mag; ' + days + '/' + month + '/' + year, 0, 40);
+  context1.fillText(days + '/' + month + '/' + year, 0, 40);
+    
+  // canvas contents will be used for a texture
+  var texture1 = new THREE.Texture(canvas1) 
+  texture1.needsUpdate = true;
+
+  var spriteMaterial = new THREE.SpriteMaterial( { map: texture1, useScreenCoordinates: true, color: 0xffffff} );
+
+  var sprite1 = new THREE.Sprite( spriteMaterial );
+  sprite1.position.set( 0, 0, -2* mag + 20);
+  sprite1.scale.set(200,100, 1.0);
+  cube.add( sprite1 ); 
+
+  // document.addEventListener('mousemove', onDocumentMouseMove);
+
+  // function onDocumentMouseMove( event ) 
+  // {
+  //   sprite1.position.set( 2* event.clientX, -2* event.clientY - 20, 1000 );
+    
+  //   // update the mouse variable
+  //   m.x = -( event.clientX / window.innerWidth);
+  //   m.y = ( event.clientY / window.innerHeight );
+  // }
+
   animateHeight(cube, quake, 1000, mag);
 
 }
@@ -89,7 +134,9 @@ function latLongToVector3(lat, lon, radius, height) {
   var z = (radius+height) * Math.cos(phi) * Math.sin(theta);
 
   return new THREE.Vector3(x,y,z);
+
 }
+
 
 function createCloud() {
   var canvasResult  = document.createElement('canvas')
